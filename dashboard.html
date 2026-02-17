@@ -155,7 +155,14 @@
       <h4>Secret Code Submission</h4>
 
       <label for="secretCode">Enter Secret Code</label>
-      <input type="text" id="secretCode" placeholder="Enter secret code here">
+      <input 
+  type="tel" 
+  id="secretCode" 
+  placeholder="Enter secret code here"
+  inputmode="numeric"
+  pattern="[0-9]*"
+>
+
 
       <button onclick="submitCode()">Submit Code</button>
 
