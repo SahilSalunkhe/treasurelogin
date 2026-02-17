@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secret Code Submission | Shivjayanti Treasure Hunt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #3b0a0a, #7a1f1f, #b08d57);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .mobile-wrapper {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .header h2 {
+      font-size: 16px;
+      margin-top: 5px;
+      opacity: 0.9;
+    }
+
+    .header h3 {
+      margin-top: 15px;
+      font-size: 22px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .card {
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      animation: fadeIn 0.7s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card h4 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    label {
+      font-size: 13px;
+      margin-bottom: 6px;
+      display: block;
+      opacity: 0.9;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-bottom: 18px;
+      font-size: 15px;
+      color: #000;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #ffd700, #caa43b);
+      color: #3b0a0a;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .secondary-btn {
+      background: transparent;
+      color: #ffd700;
+      border: 1px solid #ffd700;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 215, 0, 0.15);
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mobile-wrapper">
+
+    <div class="header">
+      <h1>Chhatrapati Shivaji Maharaj University</h1>
+      <h2>Shivjayanti 2026</h2>
+      <h3>Treasure Hunt</h3>
+    </div>
+
+    <div class="card">
+      <h4>Secret Code Submission</h4>
+
+      <label for="secretCode">Enter Secret Code</label>
+      <input type="text" id="secretCode" placeholder="Enter secret code here">
+
+      <button onclick="submitCode()">Submit Code</button>
+
+      <button class="secondary-btn" onclick="logout()">
+        Logout / Change Volunteer
+      </button>
+
+      <div class="message" id="message"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    © Shivjayanti 2025 | Treasure Hunt <br>
+    Created by Sahil Salunkhe
+  </footer>
+
+  <script>
+    // 🔴 PASTE YOUR APPS SCRIPT WEB APP URL HERE
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_JvURLSfcLAKfCa3DKZcKdWXJxkRXjsy2guySchlybGlAKpurvSBfQdec30Gs8DVK-A/exec";
+
+    function submitCode() {
+      const code = document.getElementById("secretCode").value.trim();
+      const msg = document.getElementById("message");
+
+      if (!code) {
+        msg.textContent = "Please enter the secret code.";
+        msg.style.color = "#FF8C8C";
+        return;
+      }
+
+      msg.textContent = "Checking secret code...";
+      msg.style.color = "#ffd700";
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          code: code,
+          volunteer: sessionStorage.getItem("volunteerName") || "Unknown"
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        msg.textContent = data.message;
+
+        if (data.status === "SUCCESS") {
+          msg.style.color = "#7CFF7C";
+        } else {
+          msg.style.color = "#FF8C8C";
+          alert(data.message);
+        }
+
+        document.getElementById("secretCode").value = "";
+      })
+      .catch(() => {
+        alert("Server error. Please try again.");
+      });
+    }
+
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
