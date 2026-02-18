@@ -165,17 +165,38 @@
       <label for="volunteer">Volunteer Name</label>
       <select id="volunteer">
         <option value="">Select Volunteer</option>
-        <option value="sahil">Sahil Salunkhe</option>
-        <option value="sahil">Rahul Souda</option>
-        <option value="sahil">Harshita Singh Rajput</option>
-        <option value="sahil">Dhruv Patil</option>
-        <option value="sahil">Rohita Shinde</option>
-        <option value="sahil">Ganesh Varat</option>
-        <option value="sahil">Parth Lale</option>
-        <option value="sahil">Priti Solas</option>
-        <option value="sahil">Shruti Kava</option>
-      <option value="sahil">Lawanya Marathe</option>  
-        </select>
+        <option value="Sahil Salunkhe">Sahil Salunkhe</option>
+<option value="Rahul Souda">Rahul Souda</option>
+<option value="Harshita Singh Rajput">Harshita Singh Rajput</option>
+<option value="Dhruv Patil">Dhruv Patil</option>
+<option value="Rohita Shinde">Rohita Shinde</option>
+<option value="Ganesh Varat">Ganesh Varat</option>
+<option value="Parth Lale">Parth Lale</option>
+<option value="Priti Solas">Priti Solas</option>
+<option value="Shruti Kava">Shruti Kava</option>
+<option value="Atharva Shinde">Atharva Shinde</option>
+<option value="Kshitija Gangorde">Kshitija Gangorde</option>
+<option value="Aashish">Aashish</option>
+<option value="Sanvi">Sanvi</option>
+<option value="Akshat Kumkar">Akshat Kumkar</option>
+<option value="Harsh">Harsh</option>
+<option value="Punarva">Punarva</option>
+<option value="Shravani">Shravani</option>
+<option value="Payal">Payal</option>
+<option value="Zeenat">Zeenat</option>
+<option value="harsh">harsh</option>
+<option value="Garvesh">Garvesh</option>
+<option value="yash">yash</option>
+<option value="Atish Kamble">Atish Kamble</option>
+<option value="Debornath">Debornath</option>
+<option value="Annapurna">Annapurna</option>
+<option value="Kshitija Gaikwad">Kshitija Gaikwad</option>
+<option value="Divya">Divya</option>
+<option value="Sushant">Sushant</option>
+<option value="omkar">omkar</option>
+<option value="Ruturaj">Ruturaj</option>
+<option value="Suraj">Suraj</option>
+         </select>
 
       <label for="password">Password</label>
       <input type="password" id="password" placeholder="Enter password">
@@ -193,37 +214,37 @@
   </div>
 
   <script>
-    const volunteers = {
-      sahil: "shivjayanti123"
-      
+  const COMMON_PASSWORD = "shivjayanti123";  // इथे password टाक
 
-    };
+  function login() {
+    const name = document.getElementById("volunteer").value;
+    const pass = document.getElementById("password").value;
+    const msg = document.getElementById("message");
 
-    function login() {
-      const name = document.getElementById("volunteer").value;
-      const pass = document.getElementById("password").value;
-      const msg = document.getElementById("message");
-
-      if (!name || !pass) {
-        msg.textContent = "Please select volunteer and enter password.";
-        msg.className = "message error";
-        return;
-      }
-
-      if (volunteers[name] === pass) {
-        msg.textContent = "Login successful. Access granted.";
-        msg.className = "message success";
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 800);
-
-      } else {
-        msg.textContent = "Invalid credentials. Access denied.";
-        msg.className = "message error";
-      }
+    if (!name || !pass) {
+      msg.textContent = "Please select volunteer and enter password.";
+      msg.className = "message error";
+      return;
     }
-  </script>
+
+    if (pass === COMMON_PASSWORD) {
+      msg.textContent = "Login successful. Access granted.";
+      msg.className = "message success";
+
+      // volunteer name store कर future use साठी
+      sessionStorage.setItem("volunteerName", name);
+
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 800);
+
+    } else {
+      msg.textContent = "Invalid password. Access denied.";
+      msg.className = "message error";
+    }
+  }
+</script>
+
 
 </body>
 </html>
